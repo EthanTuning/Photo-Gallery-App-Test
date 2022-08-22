@@ -37,6 +37,7 @@ export class PhotoService {
     });
 
   }
+
   public async loadSaved() {
 
     const photoList = await Preferences.get({ key: this.photosStored });
@@ -54,6 +55,28 @@ export class PhotoService {
       photo.webviewPath = `data:image/jpeg;base64,${readFile.data}`;
 
     }
+
+  }
+
+  public async deletePicture(photo: UserPhoto, position: number) {
+
+    this.photos.splice(position, 1);
+
+    Preferences.set({
+
+      key: this.photosStored,
+      value: JSON.stringify(this.photos)
+
+    });
+
+    const filename = photo.filepath.substr(photo.filepath.lastIndexOf('/') + 1);
+
+    await Filesystem.deleteFile({
+
+      path: filename,
+      directory: Directory.Data
+
+    });
 
   }
 

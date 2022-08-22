@@ -61,6 +61,7 @@ export class PhotoService {
 
     const base64Data = await this.readAsBase64(photo);
     const fileName = new Date().getTime() + '.jpeg';
+
     const savedFile = await Filesystem.writeFile({
 
       path: fileName,
@@ -96,6 +97,7 @@ export class PhotoService {
       resolve(reader.result);
 
     };
+
     reader.readAsDataURL(blob);
 
   });
